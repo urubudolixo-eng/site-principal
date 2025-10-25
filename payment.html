@@ -38,7 +38,7 @@
         document.getElementById('total').textContent = total.toFixed(2);
 
         // Gera QR Code com sua chave PIX do Nubank
-        const pixKey = 'SUA_CHAVE_PIX_NUBANK'; // Substitua pela sua chave aleatória
+        const pixKey = 'urubudolixo@gmail.com'; // Substitua pela sua chave aleatória
         document.getElementById('pix-key').textContent = pixKey;
         QRCode.toCanvas(document.getElementById('qrcode'), pixKey, { width: 200 }, (err) => {
             if (err) console.error(err);

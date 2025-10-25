@@ -12,6 +12,7 @@
         .pix-key { font-size: 1.2em; word-break: break-all; }
         .copy-btn { background: #7c4dff; color: #fff; }
         .copy-btn:hover { background: #5e35b1; }
+        .download-section { display: none; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -23,6 +24,10 @@
         <div id="qrcode"></div>
         <button onclick="simulatePixPayment()" class="btn btn-primary">Confirmar Pagamento PIX</button>
         <p>Escaneie o QR Code ou copie a chave no app do Nubank.</p>
+        <div id="download-section" class="download-section">
+            <h3>Produto Liberado!</h3>
+            <ul id="download-links"></ul>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js"></script>
     <script>
@@ -46,9 +51,15 @@
         }
 
         function simulatePixPayment() {
-            alert(`PIX de R$${total.toFixed(2)} recebido na sua conta Nubank! (Simulação)`);
+            // Simula pagamento e libera links de download
+            document.getElementById('download-section').style.display = 'block';
+            let html = '';
+            cart.forEach(p => {
+                html += `<li><a href="${p.downloadLink}" target="_blank">Baixar ${p.name}</a></li>`;
+            });
+            document.getElementById('download-links').innerHTML = html;
+            alert(`PIX de R$${total.toFixed(2)} recebido! Links liberados (Simulação).`);
             localStorage.removeItem('cart');
-            window.location.href = 'index.html';
         }
     </script>
 </body>

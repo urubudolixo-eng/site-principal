@@ -20,6 +20,7 @@
             <input type="text" class="form-control mb-3" id="name" placeholder="Nome do Produto" required>
             <textarea class="form-control mb-3" id="description" placeholder="Descrição" required></textarea>
             <input type="number" class="form-control mb-3" id="price" placeholder="Preço em R$" step="0.01" required>
+            <input type="url" class="form-control mb-3" id="downloadLink" placeholder="Link de Download (ex: Google Drive)" required>
             <button type="submit" class="btn btn-primary">Adicionar Produto</button>
         </form>
         <h2>Produtos Existentes</h2>
@@ -39,6 +40,7 @@
                     <div class="card-body">
                         <h5>${p.name}</h5>
                         <p>${p.description} - R$${p.price}</p>
+                        <p>Link: <a href="${p.downloadLink}" target="_blank">Download</a></p>
                         <button class="btn btn-danger" onclick="deleteProduct(${i})">Deletar</button>
                     </div>
                 </div>`;
@@ -51,7 +53,8 @@
             const product = {
                 name: document.getElementById('name').value,
                 description: document.getElementById('description').value,
-                price: document.getElementById('price').value
+                price: document.getElementById('price').value,
+                downloadLink: document.getElementById('downloadLink').value
             };
             products.push(product);
             localStorage.setItem('products', JSON.stringify(products));

@@ -3,23 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagamento PIX Direto</title>
+    <title>Pagamento PIX Nubank</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { background: #121212; color: #fff; }
         .checkout { max-width: 500px; margin: 50px auto; padding: 20px; background: #1f1f1f; border-radius: 8px; text-align: center; }
         #qrcode { width: 200px; height: 200px; background: #fff; margin: 20px auto; }
         .pix-key { font-size: 1.2em; word-break: break-all; }
+        .copy-btn { background: #7c4dff; color: #fff; }
+        .copy-btn:hover { background: #5e35b1; }
     </style>
 </head>
 <body>
     <div class="checkout">
-        <h2>Pagamento com PIX Direto</h2>
+        <h2>Pagamento com PIX Nubank</h2>
         <p>Total: R$ <span id="total">0</span></p>
-        <p>Chave PIX: <span class="pix-key">SUA_CHAVE_ALEATORIA_AQUI</span></p>
-        <div id="qrcode">[QR Code Simulado - Use API Mercado Pago pra real]</div>
+        <p>Chave PIX: <span class="pix-key" id="pix-key">SUA_CHAVE_PIX_NUBANK</span></p>
+        <button class="btn copy-btn" onclick="copyPixKey()">Copiar Chave PIX</button>
+        <div id="qrcode"></div>
         <button onclick="simulatePixPayment()" class="btn btn-primary">Confirmar Pagamento PIX</button>
-        <p>Escaneie o QR Code ou copie a chave no seu app de banco.</p>
+        <p>Escaneie o QR Code ou copie a chave no app do Nubank.</p>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js"></script>
     <script>
@@ -29,14 +32,21 @@
         cart.forEach(p => total += parseFloat(p.price));
         document.getElementById('total').textContent = total.toFixed(2);
 
-        // Gera QR Code simulado
-        const pixKey = 'SUA_CHAVE_ALEATORIA_AQUI'; // Substitua pela sua chave PIX
+        // Gera QR Code com sua chave PIX do Nubank
+        const pixKey = 'SUA_CHAVE_PIX_NUBANK'; // Substitua pela sua chave aleatória
+        document.getElementById('pix-key').textContent = pixKey;
         QRCode.toCanvas(document.getElementById('qrcode'), pixKey, { width: 200 }, (err) => {
             if (err) console.error(err);
         });
 
+        function copyPixKey() {
+            navigator.clipboard.writeText(pixKey).then(() => {
+                alert('Chave PIX copiada!');
+            });
+        }
+
         function simulatePixPayment() {
-            alert(`PIX de R$${total.toFixed(2)} recebido! (Simulação - Integre API pra produção)`);
+            alert(`PIX de R$${total.toFixed(2)} recebido na sua conta Nubank! (Simulação)`);
             localStorage.removeItem('cart');
             window.location.href = 'index.html';
         }
